@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -31,6 +32,12 @@ pipeline {
             }
         }
 
+        stage('Security Scan') {
+            steps {
+                sh 'trivy image $REGISTRY/$IMAGE:$BUILD_NUMBER'
+            }
+        }
+
         stage('Push to ACR') {
             steps {
                 withCredentials([usernamePassword(
@@ -57,3 +64,4 @@ pipeline {
         }
     }
 }
+```
